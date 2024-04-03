@@ -2,13 +2,13 @@ package contas
 
 import cliente "bank/clientes"
 
-type ContaCorrente struct {
-	Titular                    cliente.Titular
-	NumeroAgencia, NumeroConta int
-	saldo                      float64
+type ContaPoupanca struct {
+	Titular                              cliente.Titular
+	NumeroAgencia, NumeroConta, Operacao int
+	saldo                                float64
 }
 
-func (c *ContaCorrente) Sacar(valorDoSaque float64) string {
+func (c *ContaPoupanca) Sacar(valorDoSaque float64) string {
 	podeSacar := valorDoSaque > 0 && valorDoSaque <= c.saldo
 	if podeSacar {
 		c.saldo -= valorDoSaque
@@ -18,7 +18,7 @@ func (c *ContaCorrente) Sacar(valorDoSaque float64) string {
 	}
 }
 
-func (c *ContaCorrente) Depositar(valorDoDeposito float64) string {
+func (c *ContaPoupanca) Depositar(valorDoDeposito float64) string {
 	podeDepositar := valorDoDeposito >= 0
 	if podeDepositar {
 		c.saldo += valorDoDeposito
@@ -28,7 +28,7 @@ func (c *ContaCorrente) Depositar(valorDoDeposito float64) string {
 	}
 }
 
-func (c *ContaCorrente) Transferir(valorDaTransferencia float64, contaDestino *ContaCorrente) bool {
+func (c *ContaPoupanca) Transferir(valorDaTransferencia float64, contaDestino *ContaCorrente) bool {
 	podeTransferir := c.saldo > valorDaTransferencia && valorDaTransferencia > 0
 
 	if podeTransferir {
@@ -40,6 +40,6 @@ func (c *ContaCorrente) Transferir(valorDaTransferencia float64, contaDestino *C
 	}
 }
 
-func (c *ContaCorrente) ObterSaldo() float64 {
+func (c *ContaPoupanca) ObterSaldo() float64 {
 	return c.saldo
 }
